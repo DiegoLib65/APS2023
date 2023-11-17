@@ -1,4 +1,4 @@
-livros = [
+filmes = [
     {
         'id': '1',
         'titulo': 'O Poderoso Chefão',

@@ -1,16 +1,16 @@
 # API - Lugar para disponibilizar recursos e/ou funcionalidades. 
-# 1. Objetivo - Criar um api qu disponibiliza a consulta, criação, edição e exclusão de livros.
+# 1. Objetivo - Criar um api qu disponibiliza a consulta, criação, edição e exclusão de filmes.
 # 2. URL base - localhost
 # 3. Endpoints - 
-    # - localhost/livros (GET)
-    # - localhost/livros (POST)
-    # - localhost/livros/id (GET)
-    # - localhost/livro/id (PUT)
-    # - localhost/livro/id (DELETE)
-# 4. Quais recusrsos - Livros
+    # - localhost/filmes (GET)
+    # - localhost/filmes (POST)
+    # - localhost/filmes/id (GET)
+    # - localhost/filme/id (PUT)
+    # - localhost/filme/id (DELETE)
+# 4. Quais recusrsos - filmes
 
 from flask import Flask, jsonify,request
-from db import livros
+from db import filmes
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -18,46 +18,46 @@ CORS(app)
 
 
 #Consultar(todos)
-@app.route('/livros',methods=['GET'])
-def obter_livros():
-    return jsonify(livros)
+@app.route('/filmes',methods=['GET'])
+def obter_filmes():
+    return jsonify(filmes)
 
 #Consultar(id, nome ou Diretor)
 
-@app.route('/livros/<id>',methods=['GET'])
-def obter_livro_id(id):
-    livros_status = []
-    for livro in livros:
-        if livro.get('id') == id or livro.get('Diretor') == id or livro.get('titulo') == id or livro.get('estado') == id: 
-                livros_status.append(livro)
-    return jsonify(livros_status)
+@app.route('/filmes/<id>',methods=['GET'])
+def obter_filme_id(id):
+    filmes_status = []
+    for filme in filmes:
+        if filme.get('id') == id or filme.get('Diretor') == id or filme.get('titulo') == id or filme.get('estado') == id: 
+                filmes_status.append(filme)
+    return jsonify(filmes_status)
 
-#Editar um livro por ID
-@app.route('/livros/<id>',methods=['PUT'])
-def editar_livro_id(id):
-    livro_alterado = request.get_json()
-    for indice,livro in enumerate(livros):
-        if livro.get('id') == id:
-            livros[indice].update(livro_alterado)
-            return jsonify(livros[indice])
+#Editar um filme por ID
+@app.route('/filmes/<id>',methods=['PUT'])
+def editar_filme_id(id):
+    filme_alterado = request.get_json()
+    for indice,filme in enumerate(filmes):
+        if filme.get('id') == id:
+            filmes[indice].update(filme_alterado)
+            return jsonify(filmes[indice])
 
-#Criar novo livro
-@app.route('/livros', methods=['POST'])
-def incluir_novo_livro():
-    novo_livro = request.get_json()
-    livros.append(novo_livro)
+#Criar novo filme
+@app.route('/filmes', methods=['POST'])
+def incluir_novo_filme():
+    novo_filme = request.get_json()
+    filmes.append(novo_filme)
 
-    return jsonify(livros)
+    return jsonify(filmes)
 
-#Excluir livro
-@app.route('/livros/<id>', methods=['DELETE'])
-def excluir_livro(id):
-    for indice, livro in enumerate(livros):
-        if livro.get('id') == id:
-            del livros[indice]
+#Excluir filme
+@app.route('/filmes/<id>', methods=['DELETE'])
+def excluir_filme(id):
+    for indice, filme in enumerate(filmes):
+        if filme.get('id') == id:
+            del filmes[indice]
     
     
-    return jsonify(livros)
+    return jsonify(filmes)
 
 
 app.run(port=5000,host='0.0.0.0',debug=True)
